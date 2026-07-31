@@ -14,3 +14,5 @@ frontend/.angular/
 *.log
 .DS_Store
 test.json
+
+*.txt

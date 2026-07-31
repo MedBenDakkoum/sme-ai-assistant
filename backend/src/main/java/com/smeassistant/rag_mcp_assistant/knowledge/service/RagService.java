@@ -57,6 +57,16 @@ public class RagService {
         // 1. Récupérer les chunks pertinents
         List<String> relevantChunks = searchService.search(question, 4);
 
+        // ===== DIAGNOSTIC TEMPORAIRE =====
+        log.info("=== DIAGNOSTIC CHUNKS pour question: \"{}\" ===", question);
+        log.info("Nombre de chunks récupérés: {}", relevantChunks.size());
+        for (int i = 0; i < relevantChunks.size(); i++) {
+            log.info("--- CHUNK #{} (rang {} sur {}) ---\n{}\n--- FIN CHUNK #{} ---",
+                    i + 1, i + 1, relevantChunks.size(), relevantChunks.get(i), i + 1);
+        }
+        log.info("=== FIN DIAGNOSTIC CHUNKS ===");
+        // =================================
+
         if (relevantChunks.isEmpty()) {
             // Cas 1 : aucun chunk trouvé → escalade immédiate
             log.info("Aucun chunk trouvé pour la question : {}", question);
