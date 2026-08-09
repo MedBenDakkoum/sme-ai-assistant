@@ -1,8 +1,10 @@
 package com.smeassistant.rag_mcp_assistant.chat.controller;
 
 import com.smeassistant.rag_mcp_assistant.knowledge.service.RagService;
+import com.smeassistant.rag_mcp_assistant.mcp.KnowledgeMcpTool;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -33,5 +35,16 @@ public class ChatController {
 
         String answer = ragService.ask(question, userEmail, sessionId);
         return Map.of("answer", answer, "sessionId", sessionId);
+    }
+
+    @GetMapping("/mcp-invocations")
+    public List<String> getMcpInvocations() {
+        return KnowledgeMcpTool.getMcpInvocations();
+    }
+
+    @PostMapping("/clear-logs")
+    public Map<String, String> clearLogs() {
+        KnowledgeMcpTool.clearMcpInvocations();
+        return Map.of("status", "cleared");
     }
 }
