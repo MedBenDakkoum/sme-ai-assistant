@@ -1,6 +1,6 @@
 package com.smeassistant.rag_mcp_assistant.chat.controller;
 
-import com.smeassistant.rag_mcp_assistant.knowledge.service.RagService;
+import com.smeassistant.rag_mcp_assistant.chat.service.ChatService;
 import com.smeassistant.rag_mcp_assistant.mcp.KnowledgeMcpTool;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +12,10 @@ import java.util.UUID;
 @RequestMapping("/api/chat")
 public class ChatController {
 
-    private final RagService ragService;
+    private final ChatService chatService;
 
-    public ChatController(RagService ragService) {
-        this.ragService = ragService;
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
     }
 
     @PostMapping
@@ -33,8 +33,13 @@ public class ChatController {
             sessionId = UUID.randomUUID().toString();
         }
 
-        String answer = ragService.ask(question, userEmail, sessionId);
+        String answer = chatService.ask(question, userEmail, sessionId);
         return Map.of("answer", answer, "sessionId", sessionId);
+    }
+
+    @GetMapping("/{sessionId}/history")
+    public List<Map<String, Object>> getHistory(@PathVariable String sessionId) {
+        return chatService.getHistory(sessionId);
     }
 
     @GetMapping("/mcp-invocations")
