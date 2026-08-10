@@ -1,5 +1,7 @@
 package com.smeassistant.rag_mcp_assistant.notification.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NotificationService {
+
+    private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
 
     private final JavaMailSender mailSender;
     private final String fromEmail;
@@ -50,6 +54,12 @@ public class NotificationService {
                 java.time.OffsetDateTime.now().toString()
         ));
 
-        mailSender.send(message);
+        // Best-effort : un echec d'envoi (limite SMTP, indisponibilite...) ne doit
+        // JAMAIS faire echouer la reponse de l'assistant a l'utilisateur.
+        try {
+            mailSender.send(message);
+        } catch (Exception e) {
+            log.error("Echec envoi email d'escalade pour la question \"{}\" : {}", question, e.getMessage());
+        }
     }
 }

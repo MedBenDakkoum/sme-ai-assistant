@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from '../../core/services/chat.service';
@@ -15,7 +15,7 @@ interface Message {
   templateUrl: './chat.html',
   styleUrl: './chat.css'
 })
-export class Chat {
+export class Chat implements OnInit {
 
   messages: Message[] = [];
   currentQuestion = '';
@@ -25,6 +25,28 @@ export class Chat {
     private chatService: ChatService,
     private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    this.chatService.getHistory().subscribe({
+      next: (history) => {
+        this.messages = history
+          .filter(m => m.role === 'user' || m.role === 'assistant')
+          .map(m => ({ role: m.role as 'user' | 'assistant', content: m.content }));
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('[Chat] Échec chargement historique:', err);
+        this.messages = [];   // écran vide inchangé
+      }
+    });
+  }
+
+  newConversation(): void {
+    this.chatService.resetSessionId();
+    this.messages = [];
+    this.currentQuestion = '';
+    this.cdr.detectChanges();
+  }
 
   sendMessage(): void {
     const question = this.currentQuestion.trim();

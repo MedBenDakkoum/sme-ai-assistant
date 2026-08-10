@@ -1,9 +1,17 @@
 <div class="flex flex-col h-screen bg-gray-100">
 
   <!-- Header -->
-  <header class="bg-white shadow px-6 py-4">
-    <h1 class="text-xl font-semibold text-gray-800">Assistant IA PME</h1>
-    <p class="text-sm text-gray-500">Réponses basées uniquement sur vos documents</p>
+  <header class="bg-white shadow px-6 py-4 flex items-center justify-between">
+    <div>
+      <h1 class="text-xl font-semibold text-gray-800">Assistant IA PME</h1>
+      <p class="text-sm text-gray-500">Réponses basées uniquement sur vos documents</p>
+    </div>
+    <button
+      (click)="newConversation()"
+      class="border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+    >
+      Nouvelle conversation
+    </button>
   </header>
 
   <!-- Messages -->
