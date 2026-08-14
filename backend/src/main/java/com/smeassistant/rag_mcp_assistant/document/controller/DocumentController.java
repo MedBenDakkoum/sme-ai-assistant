@@ -40,4 +40,11 @@ public class DocumentController {
     public List<DocumentEntity> list() {
         return documentService.findAll();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        return documentService.deleteDocument(id)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
+    }
 }

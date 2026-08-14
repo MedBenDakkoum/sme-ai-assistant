@@ -2,6 +2,7 @@ package com.smeassistant.rag_mcp_assistant.knowledge.service;
 
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,5 +46,16 @@ public class IndexingService {
         vectorStore.add(documents);
 
         System.out.println("→ Document '" + filename + "' indexé avec " + chunks.size() + " chunks");
+    }
+
+    /**
+     * Supprime les vecteurs d'un document du store pgvector.
+     *
+     * @param documentId ID du document en base
+     */
+    public void deleteDocumentVectors(Long documentId) {
+        FilterExpressionBuilder filter = new FilterExpressionBuilder();
+        vectorStore.delete(filter.eq("documentId", documentId.toString()).build());
+        System.out.println("→ Vecteurs du document " + documentId + " supprimés de pgvector");
     }
 }

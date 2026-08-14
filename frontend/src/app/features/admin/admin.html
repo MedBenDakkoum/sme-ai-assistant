@@ -1,0 +1,80 @@
+<section class="admin-page">
+  <h1>Administration des documents</h1>
+
+  <div class="card">
+    <h2>Uploader un document</h2>
+    <div class="flex flex-wrap items-center gap-3">
+      <input
+        id="file-input"
+        type="file"
+        accept=".pdf,.txt"
+        class="sr-only"
+        (change)="onFileSelected($event)"
+      />
+      <label
+        for="file-input"
+        class="inline-block cursor-pointer border border-ink-muted/30 rounded-xl px-5 py-3 text-sm font-medium text-ink hover:border-accent hover:text-accent focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent"
+      >
+        Choisir un fichier
+      </label>
+      <button
+        class="bg-accent text-white rounded-xl px-5 py-3 text-sm font-medium hover:bg-accent/90 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="upload()"
+        [disabled]="!selectedFile || isUploading"
+      >
+        {{ isUploading ? 'Indexation en cours...' : 'Uploader' }}
+      </button>
+    </div>
+    <p class="mt-3 text-sm text-ink-muted" *ngIf="selectedFile && !isUploading">
+      {{ selectedFile.name }}
+    </p>
+    <p class="mt-3 text-sm font-mono text-accent" *ngIf="isUploading">
+      Indexation du document en cours, veuillez patienter...
+    </p>
+  </div>
+
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+  <div class="card">
+    <h2>Documents indexés ({{ documents.length }})</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-ink-muted/10 text-left">
+            <th class="py-3 pr-4 font-medium text-ink-muted">Nom du fichier</th>
+            <th class="py-3 pr-4 font-medium text-ink-muted">Type</th>
+            <th class="py-3 pr-4 font-medium text-ink-muted">Statut</th>
+            <th class="py-3 pr-4 font-medium text-ink-muted">Date d'upload</th>
+            <th class="py-3 font-medium text-right text-ink-muted">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of documents" class="border-b border-ink-muted/10 last:border-0">
+            <td class="py-3 pr-4 text-ink">{{ doc.filename }}</td>
+            <td class="py-3 pr-4 text-ink-muted">{{ typeLabel(doc) }}</td>
+            <td class="py-3 pr-4">
+              <span
+                class="inline-block rounded-full border px-3 py-0.5 text-xs font-medium"
+                [class]="badgeClass(doc)"
+              >
+                {{ statusLabel(doc) }}
+              </span>
+            </td>
+            <td class="py-3 pr-4 text-ink-muted">{{ formatDate(doc.uploadedAt) }}</td>
+            <td class="py-3 text-right">
+              <button
+                class="text-sm text-ink-muted hover:text-red-600 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                (click)="deleteDocument(doc)"
+              >
+                Supprimer
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-sm text-ink-muted" *ngIf="documents.length === 0 && !errorMessage">
+      Aucun document indexé pour le moment.
+    </p>
+  </div>
+</section>

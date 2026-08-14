@@ -1,14 +1,14 @@
-<div class="flex flex-col h-screen bg-gray-100">
+<div class="flex flex-col h-screen bg-background">
 
   <!-- Header -->
-  <header class="bg-white shadow px-6 py-4 flex items-center justify-between">
+  <header class="bg-surface border-b border-ink-muted/20 px-6 py-4 flex items-center justify-between">
     <div>
-      <h1 class="text-xl font-semibold text-gray-800">Assistant IA PME</h1>
-      <p class="text-sm text-gray-500">Réponses basées uniquement sur vos documents</p>
+      <h1 class="font-display text-2xl font-bold text-ink">Assistant IA PME</h1>
+      <p class="text-sm text-ink-muted">Réponses basées uniquement sur vos documents</p>
     </div>
     <button
       (click)="newConversation()"
-      class="border border-gray-300 rounded-xl px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+      class="text-sm font-medium text-ink-muted border border-ink-muted/30 rounded-xl px-4 py-2 hover:text-ink hover:border-ink-muted/60 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50"
     >
       Nouvelle conversation
     </button>
@@ -17,23 +17,29 @@
   <!-- Messages -->
   <div class="flex-1 overflow-y-auto p-6 space-y-4">
     @for (message of messages; track $index) {
-      <div class="flex" [class.justify-end]="message.role === 'user'">
-        <div
-          class="max-w-2xl px-4 py-3 rounded-2xl"
-          [class.bg-blue-600]="message.role === 'user'"
-          [class.text-white]="message.role === 'user'"
-          [class.bg-white]="message.role === 'assistant'"
-          [class.text-gray-800]="message.role === 'assistant'"
-          [class.shadow]="message.role === 'assistant'"
-        >
-          {{ message.content }}
+      @if (message.role === 'user') {
+        <div class="flex justify-end">
+          <div class="max-w-2xl px-4 py-3 rounded-2xl bg-accent text-white">
+            {{ message.content }}
+          </div>
         </div>
-      </div>
+      } @else {
+        <div class="flex flex-col items-start">
+          <div class="max-w-2xl px-4 py-3 rounded-2xl bg-surface border border-ink-muted/20 text-ink shadow-sm">
+            {{ message.content }}
+          </div>
+          @if (message.sources && message.sources.length > 0) {
+            <div class="mt-2 font-mono text-xs text-ink-muted">
+              Source : {{ message.sources.join(', ') }}
+            </div>
+          }
+        </div>
+      }
     }
 
     @if (isLoading) {
       <div class="flex">
-        <div class="bg-white shadow px-4 py-3 rounded-2xl text-gray-500">
+        <div class="bg-surface border border-ink-muted/20 px-4 py-3 rounded-2xl text-ink-muted">
           Réflexion en cours...
         </div>
       </div>
@@ -41,20 +47,20 @@
   </div>
 
   <!-- Input -->
-  <div class="bg-white border-t px-6 py-4">
+  <div class="bg-surface border-t border-ink-muted/20 px-6 py-4">
     <div class="flex gap-3">
       <input
         type="text"
         [(ngModel)]="currentQuestion"
         (keyup.enter)="sendMessage()"
         placeholder="Posez votre question..."
-        class="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="flex-1 border border-ink-muted/20 rounded-xl px-4 py-3 text-ink placeholder:text-ink-muted bg-background focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         [disabled]="isLoading"
       />
       <button
         (click)="sendMessage()"
         [disabled]="isLoading || !currentQuestion.trim()"
-        class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        class="bg-accent text-white px-6 py-3 rounded-xl hover:bg-accent/90 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Envoyer
       </button>
