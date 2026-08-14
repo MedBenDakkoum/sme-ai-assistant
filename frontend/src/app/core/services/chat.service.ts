@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface ChatRequest {
   question: string;
@@ -22,7 +23,7 @@ export interface HistoryMessage {
 })
 export class ChatService {
 
-  private apiUrl = 'http://localhost:8080/api/chat';
+  private apiUrl = `${environment.apiUrl}/api/chat`;
   private readonly sessionKey = 'chat_session_id';
 
   constructor(private http: HttpClient) {}

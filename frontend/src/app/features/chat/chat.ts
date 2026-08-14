@@ -6,6 +6,7 @@ import { ChatService } from '../../core/services/chat.service';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  sources?: string[];
 }
 
 @Component({

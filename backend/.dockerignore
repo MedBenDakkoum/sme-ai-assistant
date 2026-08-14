@@ -1,0 +1,7 @@
+target/
+.git/
+*.md
+HELP.md
+
+# Secrets réels (app-local : clés API et creds en clair) -> injectés via env docker
+src/main/resources/application-local.properties

@@ -16,6 +16,43 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    networks:
+      - rag-network
+
+  backend:
+    build:
+      context: ./backend
+    container_name: rag-mcp-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ragmcp
+      SPRING_DATASOURCE_USERNAME: raguser
+      SPRING_DATASOURCE_PASSWORD: ragpassword
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - rag-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: rag-mcp-frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+    networks:
+      - rag-network
+
+networks:
+  rag-network:
+    driver: bridge
 
 volumes:
   postgres_data:
