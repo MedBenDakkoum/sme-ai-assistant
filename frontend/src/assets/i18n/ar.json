@@ -1,0 +1,49 @@
+{
+  "navbar": {
+    "title": "مساعد الذكاء الاصطناعي للشركات الصغيرة والمتوسطة",
+    "discussion": "مناقشة",
+    "administration": "إدارة"
+  },
+  "chat": {
+    "subtitle": "ردود مستندة فقط على مستنداتك",
+    "newConversation": "محادثة جديدة",
+    "placeholder": "اطرح سؤالك...",
+    "send": "إرسال",
+    "thinking": "تفكير جاري...",
+    "sources": "المصدر: {{sources}}",
+    "emptyResponse": "استجابة فارغة من الخادم.",
+    "error": "عذرًا، حدث خطأ. يرجى المحاولة مرة أخرى."
+  },
+  "admin": {
+    "title": "إدارة المستندات",
+    "uploadCard": "رفع مستند",
+    "chooseFile": "اختيار ملف",
+    "upload": "رفع",
+    "indexing": "جاري الفهرسة...",
+    "indexingMessage": "جارٍ فهرسة المستند، يرجى الانتظار...",
+    "documentsCount": "المستندات المفهرسة ({{count}})",
+    "colFilename": "اسم الملف",
+    "colType": "النوع",
+    "colStatus": "الحالة",
+    "colDate": "تاريخ الرفع",
+    "colAction": "الإجراء",
+    "delete": "حذف",
+    "deleteIcon": "حذف {{filename}}",
+    "empty": "لا توجد مستندات مفهرسة حتى الآن.",
+    "statusIndexed": "مفهرس",
+    "statusProcessing": "قيد المعالجة",
+    "deleteModal": {
+      "title": "هل تريد حذف المستند؟",
+      "message": "هذه العملية لا يمكن التراجع عنها وستزيل المستند من البحث الدلالي.",
+      "cancel": "إلغاء",
+      "confirm": "حذف"
+    },
+    "errors": {
+      "loadFailed": "تعذر تحميل قائمة المستندات.",
+      "invalidFile": "يتم قبول الملفات بصيغة .pdf و .txt فقط.",
+      "uploadFailedWith": "فشل الرفع: {{message}}",
+      "uploadFailed": "فشل الرفع. تحقق من صحة الملف.",
+      "deleteFailed": "تعذر حذف « {{filename}} »."
+    }
+  }
+}

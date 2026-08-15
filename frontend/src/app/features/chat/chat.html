@@ -3,13 +3,13 @@
   <!-- Header -->
   <header class="bg-surface border-b border-ink-muted/20 px-6 py-4 flex items-center justify-between">
     <div>
-      <p class="text-sm text-ink-muted">Réponses basées uniquement sur vos documents</p>
+      <p class="text-sm text-ink-muted">{{ 'chat.subtitle' | translate }}</p>
     </div>
     <button
       (click)="newConversation()"
       class="text-sm font-medium text-ink-muted border border-ink-muted/30 rounded-xl px-4 py-2 hover:text-ink hover:border-ink-muted/60 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50"
     >
-      Nouvelle conversation
+      {{ 'chat.newConversation' | translate }}
     </button>
   </header>
 
@@ -29,7 +29,7 @@
           </div>
           @if (message.sources && message.sources.length > 0) {
             <div class="mt-2 font-mono text-xs text-ink-muted">
-              Source : {{ message.sources.join(', ') }}
+              {{ 'chat.sources' | translate: { sources: message.sources.join(', ') } }}
             </div>
           }
         </div>
@@ -39,7 +39,7 @@
     @if (isLoading) {
       <div class="flex">
         <div class="bg-surface border border-ink-muted/20 px-4 py-3 rounded-2xl text-ink-muted">
-          Réflexion en cours...
+          {{ 'chat.thinking' | translate }}
         </div>
       </div>
     }
@@ -52,7 +52,7 @@
         type="text"
         [(ngModel)]="currentQuestion"
         (keyup.enter)="sendMessage()"
-        placeholder="Posez votre question..."
+        [placeholder]="'chat.placeholder' | translate"
         class="flex-1 border border-ink-muted/20 rounded-xl px-4 py-3 text-ink placeholder:text-ink-muted bg-background focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         [disabled]="isLoading"
       />
@@ -61,7 +61,7 @@
         [disabled]="isLoading || !currentQuestion.trim()"
         class="bg-accent text-white px-6 py-3 rounded-xl hover:bg-accent/90 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Envoyer
+        {{ 'chat.send' | translate }}
       </button>
     </div>
   </div>
