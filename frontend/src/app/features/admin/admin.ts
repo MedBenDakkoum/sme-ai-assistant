@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { AdminService, AdminDocument } from '../../core/services/admin.service';
 
 @Component({
   selector: 'app-admin-documents',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './admin.html',
   styleUrl: './admin.css'
 })
@@ -15,9 +16,11 @@ export class AdminDocuments implements OnInit {
   selectedFile: File | null = null;
   isUploading = false;
   errorMessage = '';
+  pendingDelete: AdminDocument | null = null;
 
   constructor(
     private adminService: AdminService,
+    private translate: TranslateService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -34,7 +37,7 @@ export class AdminDocuments implements OnInit {
       },
       error: (err) => {
         console.error('[Admin] Échec chargement documents:', err);
-        this.errorMessage = 'Impossible de charger la liste des documents.';
+        this.errorMessage = this.translate.instant('admin.errors.loadFailed');
         this.cdr.detectChanges();
       }
     });
@@ -50,7 +53,7 @@ export class AdminDocuments implements OnInit {
     const name = file.name.toLowerCase();
     if (!name.endsWith('.pdf') && !name.endsWith('.txt')) {
       this.selectedFile = null;
-      this.errorMessage = 'Seuls les fichiers .pdf et .txt sont acceptés.';
+      this.errorMessage = this.translate.instant('admin.errors.invalidFile');
       return;
     }
     this.selectedFile = file;
@@ -78,28 +81,43 @@ export class AdminDocuments implements OnInit {
         this.isUploading = false;
         const msg = err?.error?.error;
         this.errorMessage = msg
-          ? `Échec de l'upload : ${msg}`
-          : "Échec de l'upload. Vérifiez que le fichier est valide.";
+          ? this.translate.instant('admin.errors.uploadFailedWith', { message: msg })
+          : this.translate.instant('admin.errors.uploadFailed');
         console.error('[Admin] Échec upload:', err);
         this.cdr.detectChanges();
       }
     });
   }
 
-  deleteDocument(doc: AdminDocument): void {
-    const confirmed = window.confirm(`Supprimer le document « ${doc.filename} » ?`);
-    if (!confirmed) {
+  @HostListener('document:keydown.escape')
+  closeDeleteDialog(): void {
+    if (this.pendingDelete) {
+      this.pendingDelete = null;
+      this.cdr.detectChanges();
+    }
+  }
+
+  requestDelete(doc: AdminDocument): void {
+    this.pendingDelete = doc;
+    this.cdr.detectChanges();
+  }
+
+  confirmDelete(): void {
+    const doc = this.pendingDelete;
+    if (!doc) {
       return;
     }
     this.adminService.deleteDocument(doc.id).subscribe({
       next: () => {
         this.documents = this.documents.filter(d => d.id !== doc.id);
+        this.pendingDelete = null;
         this.errorMessage = '';
         this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('[Admin] Échec suppression:', err);
-        this.errorMessage = `Impossible de supprimer « ${doc.filename} ».`;
+        this.pendingDelete = null;
+        this.errorMessage = this.translate.instant('admin.errors.deleteFailed', { filename: doc.filename });
         this.cdr.detectChanges();
       }
     });
@@ -118,7 +136,9 @@ export class AdminDocuments implements OnInit {
   }
 
   statusLabel(doc: AdminDocument): string {
-    return doc.indexed ? 'Indexé' : 'En cours';
+    return doc.indexed
+      ? this.translate.instant('admin.statusIndexed')
+      : this.translate.instant('admin.statusProcessing');
   }
 
   badgeClass(doc: AdminDocument): string {

@@ -1,0 +1,49 @@
+{
+  "navbar": {
+    "title": "KI-Assistent für KMU",
+    "discussion": "Gespräch",
+    "administration": "Verwaltung"
+  },
+  "chat": {
+    "subtitle": "Antworten basierend ausschließlich auf Ihren Dokumenten",
+    "newConversation": "Neues Gespräch",
+    "placeholder": "Stellen Sie Ihre Frage...",
+    "send": "Senden",
+    "thinking": "Denken...",
+    "sources": "Quelle: {{sources}}",
+    "emptyResponse": "Leere Antwort vom Server.",
+    "error": "Entschuldigung, ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "admin": {
+    "title": "Dokumentenverwaltung",
+    "uploadCard": "Dokument hochladen",
+    "chooseFile": "Datei auswählen",
+    "upload": "Hochladen",
+    "indexing": "Indexierung läuft...",
+    "indexingMessage": "Dokument wird indexiert, bitte warten...",
+    "documentsCount": "Indexierte Dokumente ({{count}})",
+    "colFilename": "Dateiname",
+    "colType": "Typ",
+    "colStatus": "Status",
+    "colDate": "Hochladedatum",
+    "colAction": "Aktion",
+    "delete": "Löschen",
+    "deleteIcon": "Löschen {{filename}}",
+    "empty": "Momentan keine indexierten Dokumente vorhanden.",
+    "statusIndexed": "Indexiert",
+    "statusProcessing": "In Bearbeitung",
+    "deleteModal": {
+      "title": "Dokument löschen?",
+      "message": "Diese Aktion ist nicht rückgängig zu machen und entfernt das Dokument aus den semantischen Suchen.",
+      "cancel": "Abbrechen",
+      "confirm": "Löschen"
+    },
+    "errors": {
+      "loadFailed": "Die Liste der Dokumente konnte nicht geladen werden.",
+      "invalidFile": "Nur .pdf- und .txt-Dateien sind akzeptiert.",
+      "uploadFailedWith": "Upload fehlgeschlagen: {{message}}",
+      "uploadFailed": "Upload fehlgeschlagen. Überprüfen Sie, ob die Datei gültig ist.",
+      "deleteFailed": "„{{filename}}“ konnte nicht gelöscht werden."
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "navbar": {
+    "title": "Assistant IA PME",
+    "discussion": "Discussion",
+    "administration": "Administration"
+  },
+  "chat": {
+    "subtitle": "Réponses basées uniquement sur vos documents",
+    "newConversation": "Nouvelle conversation",
+    "placeholder": "Posez votre question...",
+    "send": "Envoyer",
+    "thinking": "Réflexion en cours...",
+    "sources": "Source : {{sources}}",
+    "emptyResponse": "Réponse vide du serveur.",
+    "error": "Désolé, une erreur est survenue. Veuillez réessayer."
+  },
+  "admin": {
+    "title": "Administration des documents",
+    "uploadCard": "Uploader un document",
+    "chooseFile": "Choisir un fichier",
+    "upload": "Uploader",
+    "indexing": "Indexation en cours...",
+    "indexingMessage": "Indexation du document en cours, veuillez patienter...",
+    "documentsCount": "Documents indexés ({{count}})",
+    "colFilename": "Nom du fichier",
+    "colType": "Type",
+    "colStatus": "Statut",
+    "colDate": "Date d'upload",
+    "colAction": "Action",
+    "delete": "Supprimer",
+    "deleteIcon": "Supprimer {{filename}}",
+    "empty": "Aucun document indexé pour le moment.",
+    "statusIndexed": "Indexé",
+    "statusProcessing": "En cours",
+    "deleteModal": {
+      "title": "Supprimer le document ?",
+      "message": "Cette action est irréversible et retirera le document des recherches sémantiques.",
+      "cancel": "Annuler",
+      "confirm": "Supprimer"
+    },
+    "errors": {
+      "loadFailed": "Impossible de charger la liste des documents.",
+      "invalidFile": "Seuls les fichiers .pdf et .txt sont acceptés.",
+      "uploadFailedWith": "Échec de l'upload : {{message}}",
+      "uploadFailed": "Échec de l'upload. Vérifiez que le fichier est valide.",
+      "deleteFailed": "Impossible de supprimer « {{filename}} »."
+    }
+  }
+}

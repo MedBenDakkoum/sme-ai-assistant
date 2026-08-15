@@ -1,0 +1,49 @@
+{
+  "navbar": {
+    "title": "AI Assistant for SMEs",
+    "discussion": "Discussion",
+    "administration": "Administration"
+  },
+  "chat": {
+    "subtitle": "Responses based solely on your documents",
+    "newConversation": "New conversation",
+    "placeholder": "Ask your question...",
+    "send": "Send",
+    "thinking": "Thinking in progress...",
+    "sources": "Source: {{sources}}",
+    "emptyResponse": "Empty response from the server.",
+    "error": "Sorry, an error occurred. Please try again."
+  },
+  "admin": {
+    "title": "Document Administration",
+    "uploadCard": "Upload a document",
+    "chooseFile": "Choose a file",
+    "upload": "Upload",
+    "indexing": "Indexing in progress...",
+    "indexingMessage": "Indexing the document, please wait...",
+    "documentsCount": "Indexed documents ({{count}})",
+    "colFilename": "Filename",
+    "colType": "Type",
+    "colStatus": "Status",
+    "colDate": "Upload date",
+    "colAction": "Action",
+    "delete": "Delete",
+    "deleteIcon": "Delete {{filename}}",
+    "empty": "No indexed documents at the moment.",
+    "statusIndexed": "Indexed",
+    "statusProcessing": "Processing",
+    "deleteModal": {
+      "title": "Delete the document?",
+      "message": "This action is irreversible and will remove the document from semantic searches.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "errors": {
+      "loadFailed": "Unable to load the document list.",
+      "invalidFile": "Only .pdf and .txt files are accepted.",
+      "uploadFailedWith": "Upload failed: {{message}}",
+      "uploadFailed": "Upload failed. Please ensure the file is valid.",
+      "deleteFailed": "Unable to delete \"{{filename}}\"."
+    }
+  }
+}

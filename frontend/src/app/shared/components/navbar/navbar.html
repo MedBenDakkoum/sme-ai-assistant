@@ -1,7 +1,9 @@
 <header class="bg-surface border-b border-ink-muted/20 px-6 py-4">
   <nav class="flex flex-wrap items-center justify-between gap-3 md:gap-4">
     <div>
-      <h1 class="font-display text-xl md:text-2xl font-bold text-ink">Assistant IA PME</h1>
+      <h1 class="font-display text-xl md:text-2xl font-bold text-ink">
+        {{ 'navbar.title' | translate }}
+      </h1>
     </div>
     <div class="flex items-center gap-2">
       <a
@@ -10,15 +12,61 @@
         [routerLinkActiveOptions]="{ exact: true }"
         class="px-4 py-2 rounded-xl text-sm font-medium text-ink-muted hover:text-accent transition-all duration-200"
       >
-        Discussion
+        {{ 'navbar.discussion' | translate }}
       </a>
       <a
         routerLink="/admin"
         routerLinkActive="text-accent bg-accent/10"
         class="px-4 py-2 rounded-xl text-sm font-medium text-ink-muted hover:text-accent transition-all duration-200"
       >
-        Administration
+        {{ 'navbar.administration' | translate }}
       </a>
+
+      <div class="relative ml-2" #dropdown>
+        <button
+          type="button"
+          [attr.aria-expanded]="dropdownOpen"
+          aria-haspopup="listbox"
+          aria-label="Sélectionner la langue"
+          (click)="toggleDropdown()"
+          class="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium text-ink bg-background border border-ink-muted/20 hover:border-ink-muted/40 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-200 cursor-pointer"
+        >
+          <span class="w-5 h-[15px] rounded-[3px] overflow-hidden shrink-0 shadow-sm border border-black/10" [innerHTML]="flags[currentLang]"></span>
+          <span class="font-mono text-xs">{{ currentLang | uppercase }}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 text-ink-muted transition-transform duration-200" [class.rotate-180]="dropdownOpen">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+
+        @if (dropdownOpen) {
+          <ul
+            role="listbox"
+            class="absolute right-0 mt-2 w-44 bg-surface border border-ink-muted/20 rounded-xl shadow-xl shadow-black/10 p-1.5 z-50"
+          >
+            @for (lang of langs; track lang) {
+              <li>
+                <button
+                  type="button"
+                  role="option"
+                  [attr.aria-selected]="lang === currentLang"
+                  (click)="selectLang(lang)"
+                  class="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-ink hover:bg-background focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent transition-all duration-200 cursor-pointer"
+                  [class.bg-accent/10]="lang === currentLang"
+                  [class.text-accent]="lang === currentLang"
+                >
+                  <span class="w-5 h-[15px] rounded-[3px] overflow-hidden shrink-0 shadow-sm border border-black/10" [innerHTML]="flags[lang]"></span>
+                  <span>{{ langNames[lang] }}</span>
+                  @if (lang === currentLang) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="ml-auto shrink-0">
+                      <path d="M20 6 9 17l-5-5"></path>
+                    </svg>
+                  }
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
     </div>
   </nav>
 </header>

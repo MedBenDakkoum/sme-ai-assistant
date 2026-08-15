@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChatService } from '../../core/services/chat.service';
 
 interface Message {
@@ -12,7 +13,7 @@ interface Message {
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './chat.html',
   styleUrl: './chat.css'
 })
@@ -24,6 +25,7 @@ export class Chat implements OnInit {
 
   constructor(
     private chatService: ChatService,
+    private translate: TranslateService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -64,7 +66,7 @@ export class Chat implements OnInit {
     this.chatService.ask(question).subscribe({
       next: (response) => {
         console.log('[Chat] Réponse reçue:', response);
-        const content = response?.answer ?? 'Réponse vide du serveur.';
+        const content = response?.answer ?? this.translate.instant('chat.emptyResponse');
         this.messages = [...this.messages, { role: 'assistant', content }];
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -73,7 +75,7 @@ export class Chat implements OnInit {
         console.error('[Chat] Erreur:', err);
         this.messages = [...this.messages, {
           role: 'assistant',
-          content: 'Désolé, une erreur est survenue. Veuillez réessayer.'
+          content: this.translate.instant('chat.error')
         }];
         this.isLoading = false;
         this.cdr.detectChanges();
