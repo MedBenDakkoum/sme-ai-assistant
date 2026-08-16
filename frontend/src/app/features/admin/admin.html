@@ -65,7 +65,7 @@
               <button
                 [attr.aria-label]="'admin.deleteIcon' | translate: { filename: doc.filename }"
                 [title]="'admin.delete' | translate"
-                class="p-2 rounded-xl text-ink-muted hover:text-red-600 hover:bg-red-600/10 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-200"
+                class="p-2 rounded-xl text-ink-muted hover:text-red-600 hover:bg-red-600/10 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-200 cursor-pointer"
                 (click)="requestDelete(doc)"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
